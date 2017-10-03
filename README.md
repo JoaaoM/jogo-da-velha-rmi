@@ -11,16 +11,26 @@ Este projeto consiste na implementação de um jogo da velha, com interface grá
 
 ## Execução
 Para executar o jogo da velha é necessário executar quatro janelas do seu terminal de usuário:
+
 1 - Na primeira janela você vai acessar a pasta contendo os arquivos do jogo e executar os seguintes comandos:
-        -- javac *.java
-        -- rmic JogoDaVelhaServidorImplementacao
-        -- rmiregistry
+
+    javac *.java
+    
+    rmic JogoDaVelhaServidorImplementacao
+    
+    rmiregistry
+    
 2 - Na segunda janela de terminal vocÊ vai acessar a mesma pasta e executar o seguinte comando:
-        -- java JogoDaVelhaServidor
+
+    java JogoDaVelhaServidor
+        
 3 - Na terceira janela do terminal você vai acessar novamente a mesma pasta e executar o seguinte comando:
-        -- java JogoDaVelhaCliente
+    
+    java JogoDaVelhaCliente
+        
 3 - E por fim, na quarta e ultima janela do terminal você vai acessar a mesma pasta e executar o seguinte comando:
-        -- java JogoDaVelhaCliente  
+
+    java JogoDaVelhaCliente  
 
 Assim, será possivel visualizar duas janelas do java (Swing), que são a interface gráfica do jogo da velha que foi implementado.      
 
