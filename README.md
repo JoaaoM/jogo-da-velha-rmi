@@ -20,7 +20,7 @@ Para executar o jogo da velha é necessário executar quatro janelas do seu term
     
     rmiregistry
     
-2 - Na segunda janela de terminal vocÊ vai acessar a mesma pasta e executar o seguinte comando:
+2 - Na segunda janela de terminal você vai acessar a mesma pasta e executar o seguinte comando:
 
     java JogoDaVelhaServidor
         
@@ -32,7 +32,7 @@ Para executar o jogo da velha é necessário executar quatro janelas do seu term
 
     java JogoDaVelhaCliente  
 
-Assim, será possivel visualizar duas janelas do java (Swing), que são a interface gráfica do jogo da velha que foi implementado.      
+Assim, será possivel visualizar duas janelas do java (Swing), que são as interfaces gráfica do jogo da velha que foi implementado.      
 
 ## Saída
 Interface gráfica do jogo.
