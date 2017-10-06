@@ -7,9 +7,12 @@ import java.rmi.registry.Registry;
 /**
  *
  * @author ricardo
+ * 
+ * Classe que inicializa o servidor
  */
 public class JogoDaVelhaServidor {
-
+	
+	/*Informações que serão utilizadas para definir o servidor*/
     private static String ip = "localhost";
     private static String porta = "1099";
     private static String nomeServico = "JogoDaVelha";
@@ -17,6 +20,8 @@ public class JogoDaVelhaServidor {
     public static void main(String args[]) {
         JogoDaVelhaServidorInterface server;
 
+        /*Tenta pegar o registro RMI a partir da porta que o servidor escutara. Após isto,
+         * o servidor é inicializado e então é feito um bind entre o serviço e o servidor*/
         try {
             Registry registry = LocateRegistry.getRegistry(Integer.parseInt(porta));
             registry.list();

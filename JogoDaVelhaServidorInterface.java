@@ -4,6 +4,8 @@ import java.rmi.RemoteException;
 /**
  *
  * @author ricardo
+ * 
+ * Interface que herda de Remote para definir metodos/serviçoes que serão utilizados pelo servidor RMI
  */
 public interface JogoDaVelhaServidorInterface extends Remote {
 

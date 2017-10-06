@@ -3,6 +3,12 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Map;
 
+/* 
+ * Classe que herda de UnicastRemoteObject e é utilizado para criar o registry para o servidor deJava RMI,
+ * a classe também implementa a interface JogoDaVelhaServidorInterface e define os métodos lá definidos
+ * 
+ */
+
 public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implements JogoDaVelhaServidorInterface {
 
     private int tabuleiro[][];
@@ -12,6 +18,11 @@ public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implem
 
     private static final long serialVersionUID = 1L;
 
+    /* 
+     * Construtor que chama o construtor de UnicastRemoteObject.
+     * inicializa o hashmap de jogadores e zera o contador de ids.
+     * Além disso cria um tabuleiro virtual para controle do servidor. 
+     */
     protected JogoDaVelhaServidorImplementacao() throws RemoteException {
         super();
         jogadores = new HashMap<Integer, JogoDaVelhaClienteInterface>();
@@ -27,6 +38,13 @@ public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implem
         }
     }
 
+    /* 
+     * Método logar recebe um cliente e caso não tenha nenhum cadastrado, este é adicionado ao hash
+     * e seus dados são atualizados com os de controle do servidor. Se houver apenas um logado, o cliente
+     * espera até que outro jogador logue. Caso tenham 2, a partida irá começar.
+     * 
+     * Se houver mais de 2 jogadores, a conexão do novo cliente é recusada e este é termiado.
+     * */
     @Override
     public synchronized void logar(JogoDaVelhaClienteInterface cliente) throws RemoteException {
         if (idJogador < 2) {
@@ -50,6 +68,15 @@ public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implem
 
     }
 
+    /* Método que executa as jogadas. Recebe como argumento o id do jogador e a linha e coluna
+     * onde a jogada foi executada.
+     * 
+     * Realiza o teste de número de jogadas, caso seja maior que 5, é possivél que exita um
+     * vencedor, logo está opção é testada
+     * 
+     * Se 9 jogadas tiverem sido executadas, ou existirá um vencedor ou deu velha.
+     * 
+     * No caso do jogo não terminar, o outro jogador será liberado para jogar*/
     @Override
     public void jogar(int id, int linha, int coluna) throws RemoteException {
         this.tabuleiro[linha][coluna] = id;
@@ -85,7 +112,9 @@ public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implem
         // TODO Auto-generated method stub
 
     }
-
+    
+    /*Método que irá sortear os jogadores com probabilidade de 50%. O jogadore selecionado 
+     *terá sua tela liberada.*/
     private void sortearPrimeiroJogador() {
         if (Math.random() < 0.5) {
             try {
@@ -104,10 +133,12 @@ public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implem
         }
     }
 
+    /*Método que chama o sorteio de jogadores para iniciar a partida*/
     private void iniciarPartida() {
         sortearPrimeiroJogador();
     }
 
+    /*Método que processa se jogador é vencedor analisando linhas, colunas e diagonais */
     private boolean processarVencedor(int idJogador) {
         boolean resultado = false;
 

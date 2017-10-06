@@ -4,7 +4,10 @@ import java.rmi.RemoteException;
 /**
  *
  * @author ricardo
+ * 
+ * Interface que herda de Remote para definir metodos que serão utilizados por um Cliente Remoto
  */
+
 public interface JogoDaVelhaClienteInterface extends Remote {
 
     public void autorizarJogada(JogoDaVelhaServidorInterface servidor) throws RemoteException;

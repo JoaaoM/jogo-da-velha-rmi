@@ -9,6 +9,8 @@ import javax.swing.JTextField;
 /**
  *
  * @author ricardo
+ * 
+ * Classe que implementa a tela do jogador. Está contém a logica de jogadas e a interface.
  */
 public class TelaJogador extends javax.swing.JFrame {
 
@@ -19,7 +21,8 @@ public class TelaJogador extends javax.swing.JFrame {
     private int tabuleiro[][];
 
     /**
-     * Creates new form Interface
+     * Método que cria a tela do jogador. Para isto, os componentes da tela são iniciados,
+     * e o tabuleiro assume a forma inicial com valores igual a 9 por default
      */
     public TelaJogador() {
         initComponents();
@@ -31,20 +34,24 @@ public class TelaJogador extends javax.swing.JFrame {
         }
     }
 
+    /*Método para atualizar o tabuleiro com a jogada do adversario*/
     public void setJogadaAdversario(int idAdversario, int linha, int coluna) {
         tabuleiro[linha][coluna] = idAdversario;
     }
 
+    /*Método para o id do jogador e travar a tela*/
     public void setId(int id) {
         this.id = id;
         this.setImagemBotoes(id);
         this.desabilitarBotoesJogador();
     }
 
+    /*Método para atualizar o servidor para onde a tela manda as informações*/
     public void setServidor(JogoDaVelhaServidorInterface servidor) {
         this.servidor = servidor;
     }
 
+    /*Método para definir as imagens do jogo*/
     public void setImagemBotoes(int id) {
         //if(id == 0) {
         //imagemBotoes = Toolkit.getDefaultToolkit().getImage("imagens/O.jpg");
@@ -54,6 +61,7 @@ public class TelaJogador extends javax.swing.JFrame {
         imagemBotaoAdversario = new ImageIcon(getClass().getClassLoader().getResource("imagens/XX.png"));
     }
 
+    /*Método que desativa todos os botoẽs(linha/coluna do tabuleiro) */
     public void desabilitarBotoesJogador() {
         linha0Coluna0.setEnabled(false);
         linha0Coluna1.setEnabled(false);
@@ -66,6 +74,9 @@ public class TelaJogador extends javax.swing.JFrame {
         linha2Coluna2.setEnabled(false);
     }
 
+    /*Método que libera os botões para jogar. Caso seja o valor default, o botão é liberado.
+     * Caso não seja, realiza o teste para definir se o botão deve receber a imagem sua ou do
+     * adversario*/
     public void habilitarBotoesJogador() {
         if (tabuleiro[0][0] == 9) {
             linha0Coluna0.setEnabled(true);
