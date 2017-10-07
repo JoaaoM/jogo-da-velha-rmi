@@ -20,6 +20,14 @@ public class JogoDaVelhaCliente {
     private static TelaJogador tela;
 
     public static void main(String args[]) {
+    	
+    	if(args.length > 0) {
+    		try {
+    			ip = args[0];
+    		}catch(Exception e) {
+    			System.out.println("Ip invalido");
+    		}
+    	}
 
     	/*Tenta localizar o serviço a partir do protocolo rmi e informações do servidor*/
         try {

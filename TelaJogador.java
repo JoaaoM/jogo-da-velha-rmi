@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -183,6 +184,7 @@ public class TelaJogador extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+    	TelaJogador frame = this;
         planoDeFundo = new javax.swing.JPanel();
         painelInstrucoesJogo = new javax.swing.JPanel();
         campoIntrucoes = new javax.swing.JTextField();
@@ -202,8 +204,28 @@ public class TelaJogador extends javax.swing.JFrame {
         menuConfiguracao = new javax.swing.JMenu();
         menuSobre = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+//        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                if (JOptionPane.showConfirmDialog(frame, 
+                    "Deseja mesmo sair?", "Saindo?", 
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+//                    System.exit(0);
+                	try {
+                        servidor.jogar(id, -1, -1);
+                    } catch (RemoteException ex) {
+                    	System.exit(0);
+//                        Logger.getLogger(TelaJogador.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+        
         painelInstrucoesJogo.setBorder(javax.swing.BorderFactory.createTitledBorder("Instruções"));
         painelInstrucoesJogo.setName("Instruções do Jogo"); // NOI18N
 
@@ -409,6 +431,7 @@ public class TelaJogador extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
 
     private void linha0Coluna0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_linha0Coluna0ActionPerformed
         tabuleiro[0][0] = this.id;

@@ -63,7 +63,8 @@ public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implem
             }
         } else {
             cliente.getRespostaServidor("Impossível logar: O servidor está lotado. ");
-            cliente.finalizarProcessoCliente();
+            cliente.setIdJogador(-1);
+//            cliente.finalizarProcessoCliente();
         }
 
     }
@@ -79,6 +80,31 @@ public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implem
      * No caso do jogo não terminar, o outro jogador será liberado para jogar*/
     @Override
     public void jogar(int id, int linha, int coluna) throws RemoteException {
+    	
+    	/*Jogada especial que contém tanto linha quanto coluna -1
+    	 * Está jogada significa deisitencia/tela fechada*/
+    	if(jogadores.containsKey(id)) {//Testa se o jogador está jogando
+	    	if(linha < 0 || coluna < 0) {
+	    		/*Caso tenha mais de um jogador logado, apresentar a mensagem de vencedor para o outro jogador
+	    		 * e então finalizar o jogo para o vencedor. O desistente será finalizado
+	    		 * 
+	    		 * Caso tenha apenas um jogador, este será finalizado*/
+	    		if(jogadores.size() > 1) {
+		    		jogadores.get(Math.abs(1 - id)).getRespostaServidor("Voce venceu!");
+		        	jogadores.get(Math.abs(1 - id)).finalizarJogo();
+		        	//Cria um novo jogador para adquirir a interface do id, remover o id do hash e então
+		        	//destruir a referencia desta interface
+		        	JogoDaVelhaClienteInterface jogador = jogadores.get(id);
+		        	jogadores.remove(id);
+		        	jogador.finalizarProcessoCliente();
+	    		}
+	    		else
+	    			jogadores.get(id).finalizarProcessoCliente();
+	    	}
+    	}
+    	else//Caso não esteja, manda o Exception que causa o cliente a deslogar sem afetar o jogo
+    		throw new RemoteException();
+
         this.tabuleiro[linha][coluna] = id;
         numeroJogada++;
         if (numeroJogada >= 5) {
