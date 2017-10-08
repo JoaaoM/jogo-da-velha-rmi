@@ -18,6 +18,7 @@ public class JogoDaVelhaCliente {
 
     private static JogoDaVelhaClienteInterface jogador;
     private static TelaJogador tela;
+//    private static JogoDaVelhaServidorInterface server;
 
     public static void main(String args[]) {
     	
@@ -39,6 +40,7 @@ public class JogoDaVelhaCliente {
             tela = new TelaJogador();
             tela.setServidor(server);
             jogador.setTelaJogador(tela);
+            jogador.setServidor(server);
             /*Loga o cliente no servidor*/
             server.logar(jogador);
         } catch (MalformedURLException e) {
@@ -70,11 +72,11 @@ public class JogoDaVelhaCliente {
         }
 
         /*Inicia a tela*/
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                tela.setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                tela.setVisible(true);
+//            }
+//        });
     }
 
 }

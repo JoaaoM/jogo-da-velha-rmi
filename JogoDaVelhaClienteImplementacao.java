@@ -1,7 +1,10 @@
+import java.awt.Frame;
 import java.io.BufferedReader;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
+
+import javax.swing.JFrame;
 
 /**
  *
@@ -14,6 +17,7 @@ public class JogoDaVelhaClienteImplementacao extends UnicastRemoteObject impleme
 
     private int id;
     private TelaJogador tela;
+    private JogoDaVelhaServidorInterface server;
 
     /*Construtor da classe que chama o construtor de UnicastRemoteObject*/
     protected JogoDaVelhaClienteImplementacao() throws RemoteException {
@@ -36,12 +40,36 @@ public class JogoDaVelhaClienteImplementacao extends UnicastRemoteObject impleme
         tela.habilitarBotoesJogador();
 
     }
+    
+    public TelaJogador getTela() throws RemoteException {
+    	return tela;
+    }
+    
+    public void resetaTela() throws RemoteException {
+    	tela.removeAll();
+    	tela.revalidate();
+    	tela.repaint();
+    	tela.habilitarBotoesJogador();
+    	tela.setVisible(false);
+    }
+    
+    public void criarTela(int id) throws RemoteException{
+    	tela = new TelaJogador();
+    	tela.setServidor(this.server);
+		tela.setId(id);
+		tela.getCampoInstrucoes().setText("Aguarde...");
+    }
+    
 
     /*Método que finaliza o jogo*/
     @Override
     public void finalizarJogo() throws RemoteException {
         tela.desabilitarBotoesJogador();
 
+    }
+       
+    public void setServidor(JogoDaVelhaServidorInterface server) throws RemoteException{
+    	this.server = server;
     }
 
     /*Método que modifica o campo de instruções da tela de acordo com a resposta do servidor*/

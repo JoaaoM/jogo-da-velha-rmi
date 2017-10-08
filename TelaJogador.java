@@ -33,6 +33,7 @@ public class TelaJogador extends javax.swing.JFrame {
                 tabuleiro[i][j] = 9;
             }
         }
+        this.setVisible(true);
     }
 
     /*Método para atualizar o tabuleiro com a jogada do adversario*/
@@ -431,7 +432,6 @@ public class TelaJogador extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
 
     private void linha0Coluna0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_linha0Coluna0ActionPerformed
         tabuleiro[0][0] = this.id;

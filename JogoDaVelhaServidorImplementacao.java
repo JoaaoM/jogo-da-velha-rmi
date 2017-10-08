@@ -96,10 +96,24 @@ public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implem
 		        	//destruir a referencia desta interface
 		        	JogoDaVelhaClienteInterface jogador = jogadores.get(id);
 		        	jogadores.remove(id);
-		        	jogador.finalizarProcessoCliente();
+		        	
+		        	
+		        	resetaPartida();
+		        	
+		        	
+		        	jogador.finalizarProcessoCliente();		        	
 	    		}
-	    		else
-	    			jogadores.get(id).finalizarProcessoCliente();
+	    		else {
+//	    			jogadores.get(id).finalizarProcessoCliente();
+	    			
+	    			JogoDaVelhaClienteInterface jogador = jogadores.get(id);
+		        	jogadores.remove(id);
+		        	
+		        	resetaPartida();
+		        	
+		        	jogador.finalizarProcessoCliente();
+
+	    		}	
 	    	}
     	}
     	else//Caso não esteja, manda o Exception que causa o cliente a deslogar sem afetar o jogo
@@ -115,11 +129,14 @@ public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implem
                 jogadores.get(Math.abs(1 - id)).getJogadaAdversario(id, linha, coluna);
                 jogadores.get(Math.abs(1 - id)).getRespostaServidor("Voce perdeu!");
                 jogadores.get(Math.abs(1 - id)).finalizarJogo();
+				resetaPartida();
             } else {
                 if (numeroJogada == 9) {
                     jogadores.get(id).getRespostaServidor("Deu Velha!");
                     jogadores.get(Math.abs(1 - id)).getJogadaAdversario(id, linha, coluna);
                     jogadores.get(Math.abs(1 - id)).getRespostaServidor("Deu vellha!");
+                    resetaPartida();
+
                 } else {               
                     jogadores.get(id).getRespostaServidor("Aguarde a jogada do outro jogador!");
                     jogadores.get(Math.abs(1 - id)).getJogadaAdversario(id, linha, coluna);
@@ -162,6 +179,55 @@ public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implem
     /*Método que chama o sorteio de jogadores para iniciar a partida*/
     private void iniciarPartida() {
         sortearPrimeiroJogador();
+    }
+    
+    private void resetaPartida() {
+    	numeroJogada = 0;
+    	
+    	for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                tabuleiro[i][j] = 9;
+            }
+        }
+    	
+//    	this.wait(3);
+    	if(jogadores.containsKey(0)) {
+    		System.out.println("Aqui");
+    		try {
+    			jogadores.get(0).resetaTela();
+    			jogadores.get(0).criarTela(0);
+			} catch (RemoteException e) {}
+    		
+    	}
+    	if(jogadores.containsKey(1)) {
+    		System.out.println("Aqui");
+	    	try {
+	    		jogadores.get(1).resetaTela();
+	    		jogadores.get(1).criarTela(1);
+	    	}
+	    	catch(Exception e) {}
+    	}
+//    	this.wait(5);
+    	if(jogadores.size() > 1) {
+    		sortearPrimeiroJogador();
+    	}
+    	else {
+    		if(jogadores.size() == 0)
+    			idJogador = 0;
+    		else {
+    			idJogador = 1;
+	    		if(jogadores.containsKey(1)) {
+	    			JogoDaVelhaClienteInterface jogador = jogadores.get(1);
+	    			jogadores.remove(1);
+	    			try {
+						jogador.setIdJogador(0);
+						jogadores.put(0, jogador);
+					} catch (RemoteException e) {
+						e.printStackTrace();
+					}
+	    		}
+    		}	
+    	}
     }
 
     /*Método que processa se jogador é vencedor analisando linhas, colunas e diagonais */
