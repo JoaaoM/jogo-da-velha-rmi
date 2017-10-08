@@ -132,6 +132,7 @@ public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implem
                 jogadores.get(Math.abs(1 - id)).getJogadaAdversario(id, linha, coluna);
                 jogadores.get(Math.abs(1 - id)).getRespostaServidor("Voce perdeu!");
                 jogadores.get(Math.abs(1 - id)).finalizarJogo();
+                tocaMusica(id);
                 placar.setIdVencedor(id);
 				resetaPartida();
             } else {
@@ -139,6 +140,7 @@ public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implem
                     jogadores.get(id).getRespostaServidor("Deu Velha!");
                     jogadores.get(Math.abs(1 - id)).getJogadaAdversario(id, linha, coluna);
                     jogadores.get(Math.abs(1 - id)).getRespostaServidor("Deu vellha!");
+                    tocaMusica(-1);
                     resetaPartida();
 
                 } else {               
@@ -183,6 +185,29 @@ public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implem
     /*Método que chama o sorteio de jogadores para iniciar a partida*/
     private void iniciarPartida() {
         sortearPrimeiroJogador();
+    }
+    
+    private void tocaMusica(int idVencedor) {
+    	Boolean vencedor;
+    	
+    	if(idVencedor >= 0) {
+    		vencedor  = true;
+    		try {
+    			jogadores.get(idVencedor).tocaMusica(vencedor);
+				jogadores.get(Math.abs(1 - idVencedor)).tocaMusica(!vencedor);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+    	}
+    	else {
+    		vencedor = false;
+    		try {
+    			jogadores.get(0).tocaMusica(vencedor);
+				jogadores.get(1).tocaMusica(vencedor);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+    	}
     }
     
     private void atualizaPlacar() {

@@ -31,4 +31,6 @@ public interface JogoDaVelhaClienteInterface extends Remote {
     public void criarTela(int id) throws RemoteException;
     
     public void setPlacar(String placar) throws RemoteException;
+    
+    public void tocaMusica(Boolean vencedor) throws RemoteException; 
 }

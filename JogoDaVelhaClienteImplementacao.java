@@ -71,6 +71,10 @@ public class JogoDaVelhaClienteImplementacao extends UnicastRemoteObject impleme
     public void setServidor(JogoDaVelhaServidorInterface server) throws RemoteException{
     	this.server = server;
     }
+    
+    public void tocaMusica(Boolean vencedor) throws RemoteException {
+    	PlaySound.tocaMusica(vencedor);
+    }
 
     /*Método que modifica o campo de instruções da tela de acordo com a resposta do servidor*/
     @Override
