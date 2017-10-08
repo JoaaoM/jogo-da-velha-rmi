@@ -24,11 +24,11 @@ public interface JogoDaVelhaClienteInterface extends Remote {
 
     public void setTelaJogador(TelaJogador tela) throws RemoteException;
     
-    public TelaJogador getTela() throws RemoteException;
-    
     public void resetaTela() throws RemoteException;
     
     public void setServidor(JogoDaVelhaServidorInterface server) throws RemoteException;
     
     public void criarTela(int id) throws RemoteException;
+    
+    public void setPlacar(String placar) throws RemoteException;
 }

@@ -175,6 +175,10 @@ public class TelaJogador extends javax.swing.JFrame {
     public JTextField getCampoInstrucoes() {
         return campoIntrucoes;
     }
+    
+    public void setPlacar(String placar){
+    	campoPlacar.setText(placar);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -189,6 +193,8 @@ public class TelaJogador extends javax.swing.JFrame {
         planoDeFundo = new javax.swing.JPanel();
         painelInstrucoesJogo = new javax.swing.JPanel();
         campoIntrucoes = new javax.swing.JTextField();
+        painelPlacarJogo = new javax.swing.JPanel();
+        campoPlacar = new javax.swing.JTextField();
         painelTabuleiroJogo = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         linha0Coluna0 = new javax.swing.JButton();
@@ -226,6 +232,33 @@ public class TelaJogador extends javax.swing.JFrame {
                 }
             }
         });
+        
+        
+        painelPlacarJogo.setBorder(javax.swing.BorderFactory.createTitledBorder("Placar"));
+        painelPlacarJogo.setName("Placar do Jogo"); // NOI18N
+
+        campoPlacar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoIntrucoesActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout painelPlacarJogoLayout = new javax.swing.GroupLayout(painelPlacarJogo);
+        painelPlacarJogo.setLayout(painelPlacarJogoLayout);
+        painelPlacarJogoLayout.setHorizontalGroup(
+        		painelPlacarJogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelPlacarJogoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(campoPlacar)
+                .addContainerGap())
+        );
+        painelPlacarJogoLayout.setVerticalGroup(
+        		painelPlacarJogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelPlacarJogoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(campoPlacar, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+                .addContainerGap())
+        );
         
         painelInstrucoesJogo.setBorder(javax.swing.BorderFactory.createTitledBorder("Instruções"));
         painelInstrucoesJogo.setName("Instruções do Jogo"); // NOI18N
@@ -393,6 +426,7 @@ public class TelaJogador extends javax.swing.JFrame {
             .addGroup(planoDeFundoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(planoDeFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                	.addComponent(painelPlacarJogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)	
                     .addComponent(painelInstrucoesJogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(painelTabuleiroJogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -400,6 +434,8 @@ public class TelaJogador extends javax.swing.JFrame {
         planoDeFundoLayout.setVerticalGroup(
             planoDeFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, planoDeFundoLayout.createSequentialGroup()
+            		.addComponent(painelPlacarJogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
                 .addComponent(painelInstrucoesJogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(painelTabuleiroJogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -414,8 +450,8 @@ public class TelaJogador extends javax.swing.JFrame {
 
         menuSobre.setText("Sobre");
         barraDeMenu.add(menuSobre);
-
         setJMenuBar(barraDeMenu);
+        campoPlacar.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -571,6 +607,7 @@ public class TelaJogador extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraDeMenu;
     private javax.swing.JTextField campoIntrucoes;
+    private javax.swing.JTextField campoPlacar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton linha0Coluna0;
     private javax.swing.JButton linha0Coluna1;
@@ -585,6 +622,7 @@ public class TelaJogador extends javax.swing.JFrame {
     private javax.swing.JMenu menuConfiguracao;
     private javax.swing.JMenu menuSobre;
     private javax.swing.JPanel painelInstrucoesJogo;
+    private javax.swing.JPanel painelPlacarJogo;
     private javax.swing.JPanel painelTabuleiroJogo;
     private javax.swing.JPanel planoDeFundo;
     // End of variables declaration//GEN-END:variables

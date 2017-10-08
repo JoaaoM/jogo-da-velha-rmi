@@ -15,6 +15,7 @@ public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implem
     private int numeroJogada;
     private Map<Integer, JogoDaVelhaClienteInterface> jogadores;
     private int idJogador;
+    private Placar placar;
 
     private static final long serialVersionUID = 1L;
 
@@ -25,6 +26,7 @@ public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implem
      */
     protected JogoDaVelhaServidorImplementacao() throws RemoteException {
         super();
+        placar = new Placar();
         jogadores = new HashMap<Integer, JogoDaVelhaClienteInterface>();
         idJogador = 0;
 
@@ -59,6 +61,7 @@ public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implem
                 for (int i = 0; i < 2; i++) {
                     jogadores.get(i).getRespostaServidor("Aguarde a jogada do outro jogador!");
                 }
+                atualizaPlacar();
                 iniciarPartida();
             }
         } else {
@@ -129,6 +132,7 @@ public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implem
                 jogadores.get(Math.abs(1 - id)).getJogadaAdversario(id, linha, coluna);
                 jogadores.get(Math.abs(1 - id)).getRespostaServidor("Voce perdeu!");
                 jogadores.get(Math.abs(1 - id)).finalizarJogo();
+                placar.setIdVencedor(id);
 				resetaPartida();
             } else {
                 if (numeroJogada == 9) {
@@ -181,6 +185,19 @@ public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implem
         sortearPrimeiroJogador();
     }
     
+    private void atualizaPlacar() {
+    	placar.atualizarPlacar();
+    	String pontuacao = placar.toString();
+    	try {
+			jogadores.get(0).setPlacar(pontuacao);
+			jogadores.get(1).setPlacar(pontuacao);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+    	
+    	
+    }
+    
     private void resetaPartida() {
     	numeroJogada = 0;
     	
@@ -190,9 +207,7 @@ public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implem
             }
         }
     	
-//    	this.wait(3);
     	if(jogadores.containsKey(0)) {
-    		System.out.println("Aqui");
     		try {
     			jogadores.get(0).resetaTela();
     			jogadores.get(0).criarTela(0);
@@ -200,18 +215,19 @@ public class JogoDaVelhaServidorImplementacao extends UnicastRemoteObject implem
     		
     	}
     	if(jogadores.containsKey(1)) {
-    		System.out.println("Aqui");
 	    	try {
 	    		jogadores.get(1).resetaTela();
 	    		jogadores.get(1).criarTela(1);
 	    	}
 	    	catch(Exception e) {}
     	}
-//    	this.wait(5);
+
     	if(jogadores.size() > 1) {
+    		atualizaPlacar();
     		sortearPrimeiroJogador();
     	}
     	else {
+    		placar.limpaPlacar();
     		if(jogadores.size() == 0)
     			idJogador = 0;
     		else {

@@ -41,10 +41,6 @@ public class JogoDaVelhaClienteImplementacao extends UnicastRemoteObject impleme
 
     }
     
-    public TelaJogador getTela() throws RemoteException {
-    	return tela;
-    }
-    
     public void resetaTela() throws RemoteException {
     	tela.removeAll();
     	tela.revalidate();
@@ -66,6 +62,10 @@ public class JogoDaVelhaClienteImplementacao extends UnicastRemoteObject impleme
     public void finalizarJogo() throws RemoteException {
         tela.desabilitarBotoesJogador();
 
+    }
+    
+    public void setPlacar(String placar) {
+    	tela.setPlacar(placar);
     }
        
     public void setServidor(JogoDaVelhaServidorInterface server) throws RemoteException{
